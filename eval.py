@@ -31,6 +31,15 @@ ks = args.kernel_size
 def nor(x):
     return (x-np.min(x))/(np.max(x)-np.min(x))
 
+def save_wvl(wvl, savefolder, saveprefix):
+    wvl = wvl.squeeze()
+    t, h, w = wvl.shape
+    wvl = nor(wvl)
+    
+    for i in range(t):
+        wvl_t = wvl[i] * 255
+        cv2.imwrite(os.path.join(savefolder, saveprefix+'_{:03d}.png'.format(i)), wvl_t)
+
 def ensure_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
